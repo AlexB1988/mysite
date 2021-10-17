@@ -1,0 +1,27 @@
+{% extends 'refs/base.html' %}
+
+{% block content %}
+<ul>
+    <center>
+    <form action="{% url 'search' %}" method="get">
+        <input name="q" type="text" placeholder="Search...">
+        <button type="submit">Найти</button>
+    </form>
+    </center>
+</ul>
+
+<ul class="list-articles">
+
+	{% for w in posts %}
+	<li><div class="article-panel">
+		<p class="first">Категория: {{w.cat}}</p>
+		<p class="last">Дата: {{w.time_create|date:"d-m-Y H:i:s"}}</p>
+	</div>
+
+		<h4>{{w.title}}<a class="link-read-post" href="{{ w.file.url }}" download="" > Скачать </a></h4>
+			<div class="clear"></div>
+			</li>
+	{% endfor %}
+
+</ul>
+{% endblock %}
