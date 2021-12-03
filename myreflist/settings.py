@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.getenv('DEBUG', default=0)))
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -82,12 +82,14 @@ WSGI_APPLICATION = 'myreflist.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'refs_db',
-        'USER':'postgres',
+        'ENGINE': os.getenv('SQL_ENGINE'),
+        'NAME': os.getenv('SQL_DATABASE'),
+        'USER': os.getenv('SQL_USER'),
         'PASSWORD':os.getenv('PASSWORD'),
-        'HOST':'host.docker.internal',
-        'PORT':5432,
+        'HOST':os.getenv('SQL_HOST','localhost'),
+        #'HOST':'localhost',
+        #'HOST':'host.docker.internal',
+        'PORT':os.getenv('SQL_PORT'),
     }
 }
 
